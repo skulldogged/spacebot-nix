@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: main
@@ -36,10 +36,7 @@ jobs:
 
       - name: Commit and push changes
         if: steps.changes.outputs.has_changes == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit-message: "update spacebot upstream"
+          commit_message: "update spacebot upstream"
           branch: main
-          add-paths: |
-            flake.lock
-            nix/default.nix
