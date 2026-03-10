@@ -29,7 +29,8 @@
         craneLib = crane.mkLib pkgs;
 
         sources = import ./nix/sources.nix {
-          lib = pkgs.lib;
+          inherit (pkgs) lib;
+
           root = spacebot-src;
         };
 
@@ -41,8 +42,8 @@
         inherit (spacebotPackages) frontend spacebot spacebot-full spacebot-tests;
       in {
         packages = {
-          default = spacebot;
           inherit frontend spacebot spacebot-full;
+          default = spacebot-full;
         };
 
         devShells = {
