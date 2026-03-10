@@ -60,11 +60,11 @@
     "spacebot-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1773110984,
-        "narHash": "sha256-4l1mJffF5ITO+fVKVKD1jEc/NTxyUx8KpdFnaqJW3Ug=",
+        "lastModified": 1773118875,
+        "narHash": "sha256-9aBH4GFOYk5YUo2Tp1+oR8kZP9cOzNyCI6aMmqETLZM=",
         "owner": "spacedriveapp",
         "repo": "spacebot",
-        "rev": "81c7855d0d529997951d4d5b5b04d8e9bfb3a79c",
+        "rev": "57dc122642958d387c5ad5ee6d327422203eb6f5",
         "type": "github"
       },
       "original": {
