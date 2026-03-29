@@ -48,6 +48,11 @@
   cargoToml = fromTOML (builtins.readFile "${cargoSrc}/Cargo.toml");
   inherit (cargoToml.package) version;
 
+  swaggerUi = pkgs.fetchurl {
+    url = "https://github.com/swagger-api/swagger-ui/archive/refs/tags/v5.17.14.zip";
+    hash = "sha256-SBJE0IEgl7Efuu73n3HZQrFxYX+cn5UU5jrL4T5xzNw=";
+  };
+
   buildInputs = with pkgs; [
     protobuf
     cmake
@@ -166,6 +171,7 @@
     export ORT_LIB_LOCATION=${onnxruntime}/lib
     export CARGO_PROFILE_RELEASE_LTO=off
     export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=256
+    export SWAGGER_UI_DOWNLOAD_URL=file://${swaggerUi}
   '';
 
   commonRustBuildEnvWithLinker =
