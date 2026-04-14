@@ -142,6 +142,30 @@
       chmod -R u+w node_modules
       patchShebangs --build node_modules
 
+      # Upstream checks in local SpaceUI source aliases for linked development.
+      # In Nix builds we only have the published npm packages in node_modules.
+      substituteInPlace vite.config.ts \
+        --replace-fail 'const spaceui = path.resolve(__dirname, "../../spaceui/packages");' 'const spaceui = path.resolve(__dirname, "./node_modules/@spacedrive");' \
+        --replace-fail '/primitives/src/index.ts' '/primitives/dist/index.js' \
+        --replace-fail '/ai/src/index.ts' '/ai/dist/index.js' \
+        --replace-fail '/forms/src/index.ts' '/forms/dist/index.js' \
+        --replace-fail '/explorer/src/index.ts' '/explorer/dist/index.js'
+
+      substituteInPlace src/styles.css \
+        --replace-fail '@spacedrive/tokens/src/css/theme.css' '../node_modules/@spacedrive/tokens/src/css/theme.css' \
+        --replace-fail '@spacedrive/tokens/src/css/base.css' '../node_modules/@spacedrive/tokens/src/css/base.css' \
+        --replace-fail '@spacedrive/tokens/src/css/themes/light.css' '../node_modules/@spacedrive/tokens/src/css/themes/light.css' \
+        --replace-fail '@spacedrive/tokens/src/css/themes/dark.css' '../node_modules/@spacedrive/tokens/src/css/themes/dark.css' \
+        --replace-fail '@spacedrive/tokens/src/css/themes/midnight.css' '../node_modules/@spacedrive/tokens/src/css/themes/midnight.css' \
+        --replace-fail '@spacedrive/tokens/src/css/themes/noir.css' '../node_modules/@spacedrive/tokens/src/css/themes/noir.css' \
+        --replace-fail '@spacedrive/tokens/src/css/themes/slate.css' '../node_modules/@spacedrive/tokens/src/css/themes/slate.css' \
+        --replace-fail '@spacedrive/tokens/src/css/themes/nord.css' '../node_modules/@spacedrive/tokens/src/css/themes/nord.css' \
+        --replace-fail '@spacedrive/tokens/src/css/themes/mocha.css' '../node_modules/@spacedrive/tokens/src/css/themes/mocha.css' \
+        --replace-fail '../../../spaceui/packages/primitives/src' './node_modules/@spacedrive/primitives/dist' \
+        --replace-fail '../../../spaceui/packages/ai/src' './node_modules/@spacedrive/ai/dist' \
+        --replace-fail '../../../spaceui/packages/forms/src' './node_modules/@spacedrive/forms/dist' \
+        --replace-fail '../../../spaceui/packages/explorer/src' './node_modules/@spacedrive/explorer/dist'
+
       bun run build
 
       runHook postBuild
